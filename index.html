@@ -11,7 +11,7 @@
       <header class="app-header card">
         <div>
           <h1>Alcohol Reduction Tracker</h1>
-          <p>Log drinks by date, review history, and edit past entries.</p>
+          <p>Primary goal: log sober days and celebrate alcohol-free consistency.</p>
         </div>
         <div class="header-images" aria-hidden="true">
           <img src="assets/trophy.svg" alt="" />
@@ -20,35 +20,39 @@
       </header>
 
       <section class="card" aria-labelledby="entry-form-title">
-        <h2 id="entry-form-title">Add or update an entry</h2>
-        <div class="quick-buttons" aria-label="Quick add presets">
-          <button type="button" class="preset" data-type="Beer" data-units="1">🍺 Beer 1</button>
-          <button type="button" class="preset" data-type="Wine" data-units="1.5">🍷 Wine 1.5</button>
-          <button type="button" class="preset" data-type="Cocktail" data-units="2">🍸 Cocktail 2</button>
-          <button type="button" class="preset" data-type="Spirits" data-units="1">🥃 Spirits 1</button>
-        </div>
+        <h2 id="entry-form-title">Daily check-in</h2>
         <form id="entry-form" class="entry-form">
           <label>
             Date
             <input id="entry-date" name="date" type="date" required />
           </label>
 
-          <label>
-            Drink type
-            <input
-              id="entry-type"
-              name="type"
-              type="text"
-              maxlength="60"
-              placeholder="Beer, wine, whiskey..."
-              required
-            />
-          </label>
+          <fieldset class="status-fieldset">
+            <legend>How did this day go?</legend>
+            <div class="status-buttons" role="radiogroup" aria-label="Daily alcohol status">
+              <button type="button" id="status-sober" data-status="sober" class="status-btn active">✅ Alcohol-free day</button>
+              <button type="button" id="status-drank" data-status="drank" class="status-btn">🍷 I had a drink</button>
+            </div>
+          </fieldset>
 
-          <label>
-            Units / drinks
-            <input id="entry-units" name="units" type="number" min="0" step="0.5" placeholder="1" required />
-          </label>
+          <section id="drink-details" class="drink-details hidden" aria-label="Drink details">
+            <label>
+              Drink type
+              <input id="entry-type" name="type" type="text" maxlength="60" placeholder="Beer, wine, whiskey..." />
+            </label>
+
+            <label>
+              Units / drinks
+              <input id="entry-units" name="units" type="number" min="0" step="0.5" placeholder="1" />
+            </label>
+
+            <div class="quick-buttons" aria-label="Quick add presets">
+              <button type="button" class="preset" data-type="Beer" data-units="1">🍺 Beer 1</button>
+              <button type="button" class="preset" data-type="Wine" data-units="1.5">🍷 Wine 1.5</button>
+              <button type="button" class="preset" data-type="Cocktail" data-units="2">🍸 Cocktail 2</button>
+              <button type="button" class="preset" data-type="Spirits" data-units="1">🥃 Spirits 1</button>
+            </div>
+          </section>
 
           <label>
             Notes (optional)
@@ -57,25 +61,43 @@
               name="notes"
               maxlength="240"
               rows="3"
-              placeholder="Social event, stress, celebration..."
+              placeholder="Triggers, wins, social context, or reflections..."
             ></textarea>
           </label>
 
           <div class="actions">
-            <button id="save-button" type="submit">✨ Save entry</button>
+            <button id="save-button" type="submit">Save day</button>
             <button id="cancel-edit" type="button" class="secondary hidden">Cancel edit</button>
           </div>
         </form>
       </section>
 
+      <section class="card stats" aria-labelledby="stats-title">
+        <h2 id="stats-title">Sober day stats</h2>
+        <div class="stat-grid">
+          <article>
+            <strong id="current-streak">0</strong>
+            <span>Current sober streak</span>
+          </article>
+          <article>
+            <strong id="best-streak">0</strong>
+            <span>Best sober streak</span>
+          </article>
+          <article>
+            <strong id="total-sober-days">0</strong>
+            <span>Total sober days</span>
+          </article>
+        </div>
+      </section>
+
       <section class="card achievements" aria-labelledby="achievements-title">
-        <h2 id="achievements-title">Milestones & achievements</h2>
+        <h2 id="achievements-title">Sober milestones & trophies</h2>
         <div id="milestone-grid" class="milestone-grid"></div>
       </section>
 
       <section class="card" aria-labelledby="history-title">
         <div class="history-header">
-          <h2 id="history-title">Daily log history</h2>
+          <h2 id="history-title">Daily history</h2>
           <button id="clear-all" class="danger secondary" type="button">🧹 Clear all</button>
         </div>
         <p id="summary" class="summary" aria-live="polite"></p>
@@ -86,7 +108,7 @@
     <div id="achievement-toast" class="achievement-toast hidden" role="status" aria-live="polite">
       <img src="assets/trophy.svg" alt="Trophy" />
       <div>
-        <strong id="toast-title">Achievement unlocked!</strong>
+        <strong>Achievement unlocked!</strong>
         <p id="toast-text"></p>
       </div>
     </div>
