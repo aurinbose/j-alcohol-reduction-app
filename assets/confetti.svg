@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Confetti celebration">
+  <rect width="128" height="128" rx="24" fill="#eef7ff"/>
+  <circle cx="30" cy="30" r="8" fill="#ff6f61"/>
+  <circle cx="94" cy="24" r="6" fill="#ffd166"/>
+  <circle cx="104" cy="72" r="7" fill="#7bd389"/>
+  <rect x="22" y="74" width="14" height="14" transform="rotate(20 29 81)" fill="#6c8cff"/>
+  <rect x="72" y="44" width="12" height="12" transform="rotate(-18 78 50)" fill="#ff8fab"/>
+  <path d="M40 100l18-54 18 54H40z" fill="#6c8cff"/>
+  <path d="M58 46l6-18 6 18h-12z" fill="#ff6f61"/>
+</svg>

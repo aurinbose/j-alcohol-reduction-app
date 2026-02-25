@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alcohol Reduction Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header card">
+        <div>
+          <h1>Alcohol Reduction Tracker</h1>
+          <p>Log drinks by date, review history, and edit past entries.</p>
+        </div>
+        <div class="header-images" aria-hidden="true">
+          <img src="assets/trophy.svg" alt="" />
+          <img src="assets/confetti.svg" alt="" />
+        </div>
+      </header>
+
+      <section class="card" aria-labelledby="entry-form-title">
+        <h2 id="entry-form-title">Add or update an entry</h2>
+        <div class="quick-buttons" aria-label="Quick add presets">
+          <button type="button" class="preset" data-type="Beer" data-units="1">🍺 Beer 1</button>
+          <button type="button" class="preset" data-type="Wine" data-units="1.5">🍷 Wine 1.5</button>
+          <button type="button" class="preset" data-type="Cocktail" data-units="2">🍸 Cocktail 2</button>
+          <button type="button" class="preset" data-type="Spirits" data-units="1">🥃 Spirits 1</button>
+        </div>
+        <form id="entry-form" class="entry-form">
+          <label>
+            Date
+            <input id="entry-date" name="date" type="date" required />
+          </label>
+
+          <label>
+            Drink type
+            <input
+              id="entry-type"
+              name="type"
+              type="text"
+              maxlength="60"
+              placeholder="Beer, wine, whiskey..."
+              required
+            />
+          </label>
+
+          <label>
+            Units / drinks
+            <input id="entry-units" name="units" type="number" min="0" step="0.5" placeholder="1" required />
+          </label>
+
+          <label>
+            Notes (optional)
+            <textarea
+              id="entry-notes"
+              name="notes"
+              maxlength="240"
+              rows="3"
+              placeholder="Social event, stress, celebration..."
+            ></textarea>
+          </label>
+
+          <div class="actions">
+            <button id="save-button" type="submit">✨ Save entry</button>
+            <button id="cancel-edit" type="button" class="secondary hidden">Cancel edit</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card achievements" aria-labelledby="achievements-title">
+        <h2 id="achievements-title">Milestones & achievements</h2>
+        <div id="milestone-grid" class="milestone-grid"></div>
+      </section>
+
+      <section class="card" aria-labelledby="history-title">
+        <div class="history-header">
+          <h2 id="history-title">Daily log history</h2>
+          <button id="clear-all" class="danger secondary" type="button">🧹 Clear all</button>
+        </div>
+        <p id="summary" class="summary" aria-live="polite"></p>
+        <div id="history" class="history"></div>
+      </section>
+    </main>
+
+    <div id="achievement-toast" class="achievement-toast hidden" role="status" aria-live="polite">
+      <img src="assets/trophy.svg" alt="Trophy" />
+      <div>
+        <strong id="toast-title">Achievement unlocked!</strong>
+        <p id="toast-text"></p>
+      </div>
+    </div>
+
+    <template id="entry-template">
+      <article class="entry-item">
+        <div class="entry-main">
+          <p class="entry-meta"></p>
+          <p class="entry-notes"></p>
+        </div>
+        <div class="entry-buttons">
+          <button type="button" data-action="edit" class="secondary">✏️ Edit</button>
+          <button type="button" data-action="delete" class="danger secondary">🗑 Delete</button>
+        </div>
+      </article>
+    </template>
+
+    <template id="milestone-template">
+      <article class="milestone-item">
+        <span class="milestone-icon"></span>
+        <div>
+          <strong class="milestone-title"></strong>
+          <p class="milestone-text"></p>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
