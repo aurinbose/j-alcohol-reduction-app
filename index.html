@@ -7,72 +7,104 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <header class="app-header">
-        <h1>Alcohol Reduction Tracker</h1>
-        <p>Log drinks by date, review history, and edit past entries.</p>
-      </header>
+    <main class="page">
+      <section class="app-card">
+        <nav class="top-tabs" aria-label="Primary">
+          <button class="tab active" type="button">Home</button>
+          <button class="tab" type="button">Reports</button>
+          <button class="tab" type="button">Activities</button>
+          <button class="tab" type="button">Profile</button>
+        </nav>
 
-      <section class="card" aria-labelledby="entry-form-title">
-        <h2 id="entry-form-title">Add or update an entry</h2>
-        <form id="entry-form" class="entry-form">
+        <header class="hero">
+          <div class="hero-head">
+            <h1>Hi, Friend!</h1>
+            <span class="sparkle">✨</span>
+          </div>
+          <p class="quote">“Progress, not perfection.”</p>
+        </header>
+
+        <section class="status-panel">
+          <h2>How was today?</h2>
+          <div class="status-buttons">
+            <button id="btn-sober" class="status sober" type="button">✓ Alcohol-Free Day</button>
+            <button id="btn-drink" class="status drink" type="button">Had a Drink</button>
+          </div>
+        </section>
+
+        <form id="entry-form" class="entry-form" aria-labelledby="entry-title">
+          <h2 id="entry-title">Log details</h2>
+          <div class="form-grid">
+            <label>
+              Date
+              <input id="entry-date" name="date" type="date" required />
+            </label>
+            <label>
+              Drink type
+              <input id="entry-type" name="type" type="text" maxlength="60" placeholder="Beer, wine, whiskey..." required />
+            </label>
+            <label>
+              Units / drinks
+              <input id="entry-units" name="units" type="number" min="0" step="0.5" placeholder="0" required />
+            </label>
+          </div>
           <label>
-            Date
-            <input id="entry-date" name="date" type="date" required />
+            Your why / notes
+            <textarea id="entry-notes" name="notes" maxlength="240" rows="2" placeholder="What motivated your choice today?"></textarea>
           </label>
 
-          <label>
-            Drink type
-            <input
-              id="entry-type"
-              name="type"
-              type="text"
-              maxlength="60"
-              placeholder="Beer, wine, whiskey..."
-              required
-            />
-          </label>
-
-          <label>
-            Units / drinks
-            <input
-              id="entry-units"
-              name="units"
-              type="number"
-              min="0"
-              step="0.5"
-              placeholder="1"
-              required
-            />
-          </label>
-
-          <label>
-            Notes (optional)
-            <textarea
-              id="entry-notes"
-              name="notes"
-              maxlength="240"
-              rows="3"
-              placeholder="Social event, stress, celebration..."
-            ></textarea>
-          </label>
+          <div class="quick-buttons" aria-label="Quick add presets">
+            <button type="button" class="preset" data-type="Beer" data-units="1">🍺 Beer 1</button>
+            <button type="button" class="preset" data-type="Wine" data-units="1.5">🍷 Wine 1.5</button>
+            <button type="button" class="preset" data-type="Cocktail" data-units="2">🍸 Cocktail 2</button>
+            <button type="button" class="preset" data-type="Spirits" data-units="1">🥃 Spirits 1</button>
+          </div>
 
           <div class="actions">
-            <button id="save-button" type="submit">Save entry</button>
+            <button id="save-button" type="submit" class="primary">Save entry</button>
             <button id="cancel-edit" type="button" class="secondary hidden">Cancel edit</button>
+            <button id="clear-all" class="secondary danger" type="button">Clear all</button>
           </div>
         </form>
-      </section>
 
-      <section class="card" aria-labelledby="history-title">
-        <div class="history-header">
-          <h2 id="history-title">Daily log history</h2>
-          <button id="clear-all" class="danger secondary" type="button">Clear all</button>
-        </div>
-        <p id="summary" class="summary" aria-live="polite"></p>
-        <div id="history" class="history"></div>
+        <section class="stats-grid" aria-label="Stats">
+          <article class="stat streak">
+            <strong id="current-streak">0</strong>
+            <span>Current Streak</span>
+          </article>
+          <article class="stat best">
+            <strong id="best-streak">0</strong>
+            <span>Best Streak</span>
+          </article>
+          <article class="stat sober-total">
+            <strong id="total-sober">0</strong>
+            <span>Total Sober Days</span>
+          </article>
+        </section>
+
+        <section class="history-card" aria-labelledby="history-title">
+          <h2 id="history-title">Last 7 Days</h2>
+          <div id="week-strip" class="week-strip"></div>
+          <p id="summary" class="summary" aria-live="polite"></p>
+          <div id="history" class="history"></div>
+        </section>
+
+        <section class="milestone-card" aria-labelledby="milestones-title">
+          <h2 id="milestones-title">Next milestone</h2>
+          <div id="next-milestone" class="next-milestone"></div>
+          <h3>🏆 Your trophies</h3>
+          <div id="milestone-grid" class="milestone-grid"></div>
+        </section>
       </section>
     </main>
+
+    <div id="achievement-toast" class="achievement-toast hidden" role="status" aria-live="polite">
+      <img src="assets/trophy.svg" alt="Trophy" />
+      <div>
+        <strong>Achievement unlocked!</strong>
+        <p id="toast-text"></p>
+      </div>
+    </div>
 
     <template id="entry-template">
       <article class="entry-item">
@@ -82,7 +114,17 @@
         </div>
         <div class="entry-buttons">
           <button type="button" data-action="edit" class="secondary">Edit</button>
-          <button type="button" data-action="delete" class="danger secondary">Delete</button>
+          <button type="button" data-action="delete" class="secondary danger">Delete</button>
+        </div>
+      </article>
+    </template>
+
+    <template id="milestone-template">
+      <article class="milestone-item">
+        <span class="milestone-icon"></span>
+        <div>
+          <strong class="milestone-title"></strong>
+          <p class="milestone-text"></p>
         </div>
       </article>
     </template>
